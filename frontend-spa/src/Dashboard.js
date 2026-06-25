@@ -39,13 +39,14 @@ export default {
 
             <main class="flex-1 p-8 overflow-y-auto">
                 
+                <!-- TAB BUKU -->
                 <div v-if="activeTab === 'buku'" class="space-y-6 animate-fade-in">
                     <div class="flex justify-between items-center bg-white p-6 rounded-xl shadow-sm border border-purple-100">
                         <div>
                             <h1 class="text-2xl font-bold text-slate-800">Manajemen Buku</h1>
                             <p class="text-sm text-slate-500 mt-1">Kelola data master katalog buku digital</p>
                         </div>
-                        <button @click="showModalBuku = true" class="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2.5 rounded-lg shadow-sm font-semibold text-sm transition-colors flex items-center">
+                        <button @click="bukaModalTambah" class="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2.5 rounded-lg shadow-sm font-semibold text-sm transition-colors flex items-center">
                             <i class="fa-solid fa-plus mr-2"></i> Tambah Buku
                         </button>
                     </div>
@@ -57,6 +58,7 @@ export default {
                                     <th class="p-4 font-semibold">Judul Buku</th>
                                     <th class="p-4 font-semibold">Genre</th>
                                     <th class="p-4 font-semibold text-center">Stok Sisa</th>
+                                    <th class="p-4 font-semibold text-center">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -64,13 +66,23 @@ export default {
                                     <td class="p-4 font-medium text-slate-800">{{ buku.judul }}</td>
                                     <td class="p-4 text-slate-600"><span class="px-2.5 py-1 bg-purple-100 text-purple-700 rounded-md text-xs font-semibold">{{ buku.kategori_genre }}</span></td>
                                     <td class="p-4 font-bold text-center text-slate-700">{{ buku.stok }}</td>
+                                    <td class="p-4 text-center">
+                                        <!-- Tombol Edit & Hapus -->
+                                        <button @click="bukaModalEdit(buku)" class="text-blue-500 hover:text-blue-700 mx-2 transition-colors" title="Edit Data">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
+                                        <button @click="hapusBuku(buku.id)" class="text-red-500 hover:text-red-700 mx-2 transition-colors" title="Hapus Data">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </td>
                                 </tr>
-                                <tr v-if="listBuku.length === 0"><td colspan="3" class="p-8 text-center text-slate-400">Tidak ada data buku.</td></tr>
+                                <tr v-if="listBuku.length === 0"><td colspan="4" class="p-8 text-center text-slate-400">Tidak ada data buku.</td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
 
+                <!-- TAB ANGGOTA -->
                 <div v-if="activeTab === 'anggota'" class="space-y-6 animate-fade-in">
                     <div class="flex justify-between items-center bg-white p-6 rounded-xl shadow-sm border border-purple-100">
                         <div>
@@ -103,6 +115,7 @@ export default {
                     </div>
                 </div>
 
+                <!-- TAB RENTAL -->
                 <div v-if="activeTab === 'rental'" class="space-y-6 animate-fade-in">
                     <div class="flex justify-between items-center bg-white p-6 rounded-xl shadow-sm border border-purple-100">
                         <div>
@@ -147,10 +160,13 @@ export default {
                 </div>
             </main>
 
+            <!-- MODAL FORM BUKU -->
             <div v-if="showModalBuku" class="fixed inset-0 bg-slate-900/60 flex items-center justify-center z-50 p-4">
-                <div class="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden">
+                <div class="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden animate-fade-in">
                     <div class="bg-purple-600 p-4 text-white flex justify-between items-center">
-                        <h3 class="font-bold"><i class="fa-solid fa-book mr-2"></i> Tambah Buku Baru</h3>
+                        <h3 class="font-bold">
+                            <i class="fa-solid fa-book mr-2"></i> {{ isEdit ? 'Edit Data Buku' : 'Tambah Buku Baru' }}
+                        </h3>
                         <button @click="showModalBuku = false" class="text-purple-200 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
                     </div>
                     <form @submit.prevent="simpanBuku" class="p-5 space-y-4">
@@ -178,7 +194,9 @@ export default {
                         </div>
                         <div class="pt-3 flex justify-end space-x-2">
                             <button type="button" @click="showModalBuku = false" class="px-4 py-2 bg-slate-100 text-slate-600 rounded-lg text-sm font-semibold hover:bg-slate-200">Batal</button>
-                            <button type="submit" class="px-4 py-2 bg-purple-600 text-white rounded-lg text-sm font-semibold hover:bg-purple-700">Simpan Buku</button>
+                            <button type="submit" class="px-4 py-2 bg-purple-600 text-white rounded-lg text-sm font-semibold hover:bg-purple-700">
+                                {{ isEdit ? 'Update Buku' : 'Simpan Buku' }}
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -190,6 +208,8 @@ export default {
             activeTab: 'buku',
             listBuku: [], listAnggota: [], listRental: [],
             showModalBuku: false,
+            isEdit: false,
+            editId: null,
             formBuku: { judul: '', kategori_genre: '', penulis: '', stok: 0, cover_url: '' }
         }
     },
@@ -211,20 +231,50 @@ export default {
                 console.error('Gagal memuat data dashboard:', error);
             }
         },
+        bukaModalTambah() {
+            this.isEdit = false;
+            this.editId = null;
+            this.formBuku = { judul: '', kategori_genre: '', penulis: '', stok: 0, cover_url: '' };
+            this.showModalBuku = true;
+        },
+        bukaModalEdit(buku) {
+            this.isEdit = true;
+            this.editId = buku.id;
+            // Menyalin data agar tabel tidak langsung berubah sebelum di-submit
+            this.formBuku = { ...buku }; 
+            this.showModalBuku = true;
+        },
         async simpanBuku() {
             try {
-                await axios.post('/buku', this.formBuku);
+                if (this.isEdit) {
+                    await axios.put(`/buku/${this.editId}`, this.formBuku);
+                } else {
+                    await axios.post('/buku', this.formBuku);
+                }
                 this.showModalBuku = false;
                 this.fetchAllData();
-                this.formBuku = { judul: '', kategori_genre: '', penulis: '', stok: 0, cover_url: '' };
-            } catch (error) { alert('Terjadi kesalahan saat menyimpan buku.'); }
+            } catch (error) { 
+                alert('Terjadi kesalahan saat menyimpan buku.'); 
+            }
+        },
+        async hapusBuku(id) {
+            if(confirm('Yakin ingin menghapus buku ini dari sistem?')) {
+                try {
+                    await axios.delete(`/buku/${id}`);
+                    this.fetchAllData();
+                } catch (error) { 
+                    alert('Gagal menghapus buku. Pastikan buku tidak sedang dipinjam.'); 
+                }
+            }
         },
         async kembalikanBuku(idRental) {
             if(confirm('Yakin ingin memproses pengembalian buku ini? Stok akan otomatis bertambah.')) {
                 try {
                     await axios.put(`/peminjaman/${idRental}`, { status: 'dikembalikan' });
                     this.fetchAllData();
-                } catch (error) { alert('Gagal memproses pengembalian buku.'); }
+                } catch (error) { 
+                    alert('Gagal memproses pengembalian buku.'); 
+                }
             }
         },
         getNamaUser(id) {
