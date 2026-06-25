@@ -27,6 +27,9 @@ Berikut adalah panduan singkat untuk menjalankan proyek backend dan frontend di 
 3. Buka file `index.html` menggunakan web server lokal ringan (seperti ekstensi **Live Server** di VS Code).
 
 ---
+### Login Admin
+- Username: admin
+- Password: admin123
 
 ## 📸 Dokumentasi Tangkapan Layar (Screenshots)
 
