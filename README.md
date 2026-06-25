@@ -53,4 +53,4 @@ Berikut adalah panduan singkat untuk menjalankan proyek backend dan frontend di 
 
 ## 🔗 Tautan Penting
 *   [Video Penjelasan Proyek](https://youtu.be/jUCtSDYYHXk?si=lxt1fLVvpaBxI-24)
-*   [Link Demo Web](http://rentalbuku.com/#/)
+*   [Link Demo Web](http://rentalbuku.my.id/)
