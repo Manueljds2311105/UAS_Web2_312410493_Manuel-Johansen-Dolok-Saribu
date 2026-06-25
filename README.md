@@ -32,21 +32,22 @@ Berikut adalah panduan singkat untuk menjalankan proyek backend dan frontend di 
 
 ### 1. Skema Relasi Tabel Database (phpMyAdmin)
 *(Gambar skema relasi minimal 3 tabel)*
-![Skema Database](URL_GAMBAR_SKEMA_DATABASE_DISINI)
+![Skema Database](https://github.com/Manueljds2311105/UAS_Web2_312410493_Manuel-Johansen-Dolok-Saribu/blob/44928fdba71e93874be03028347acfa5fe1a31a0/SS%20UASWEB2/Screenshot%202026-06-25%20110425.png)
 
 ### 2. Uji Coba Keamanan Token API (Postman)
 *(Uji coba tembak API gagal / Error 401 lewat Postman akibat tidak melampirkan Bearer Token)*
-![Error 401 Postman](URL_GAMBAR_POSTMAN_DISINI)
+![Error 401 Postman](https://github.com/Manueljds2311105/UAS_Web2_312410493_Manuel-Johansen-Dolok-Saribu/blob/44928fdba71e93874be03028347acfa5fe1a31a0/SS%20UASWEB2/Screenshot%202026-06-15%20153800.png)
 
 ### 3. Antarmuka Aplikasi (UI)
 **Halaman Login**
-![Login UI](URL_GAMBAR_LOGIN_DISINI)
+![Login UI](https://github.com/Manueljds2311105/UAS_Web2_312410493_Manuel-Johansen-Dolok-Saribu/blob/44928fdba71e93874be03028347acfa5fe1a31a0/SS%20UASWEB2/Screenshot%202026-06-25%20115250.png)
 
 **Halaman Dashboard Admin & Visualisasi Data Tabel**
-![Dashboard UI](URL_GAMBAR_DASHBOARD_DISINI)
+![Dashboard UI](https://github.com/Manueljds2311105/UAS_Web2_312410493_Manuel-Johansen-Dolok-Saribu/blob/44928fdba71e93874be03028347acfa5fe1a31a0/SS%20UASWEB2/Screenshot%202026-06-25%20121650.png)
 
 **Tampilan Form Modal (Tambah/Edit Data)**
-![Modal UI](URL_GAMBAR_MODAL_DISINI)
+![Modal UI](https://github.com/Manueljds2311105/UAS_Web2_312410493_Manuel-Johansen-Dolok-Saribu/blob/44928fdba71e93874be03028347acfa5fe1a31a0/SS%20UASWEB2/Screenshot%202026-06-25%20121705.png)
+![Modal UI](https://github.com/Manueljds2311105/UAS_Web2_312410493_Manuel-Johansen-Dolok-Saribu/blob/44928fdba71e93874be03028347acfa5fe1a31a0/SS%20UASWEB2/Screenshot%202026-06-25%20121725.png)
 
 ---
 
